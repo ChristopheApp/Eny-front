@@ -1,0 +1,18 @@
+.enyTitleContainer {
+  z-index: 100;
+}
+
+.enySubtitle {
+  font-size: 16px;
+  font-weight: 200;
+  text-transform: uppercase;
+  margin-top: 20px;
+}
+
+@media screen and (max-width: 425px) {
+  .enySubtitle {
+    font-size: 10px;
+    margin-top: 0;
+    overflow: hidden;
+  }
+}

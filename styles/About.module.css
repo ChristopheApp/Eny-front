@@ -1,0 +1,73 @@
+/* 
+* About
+*/
+
+.abouteny {
+    width: 100%;
+    min-height: 670px;
+    margin: 250px 0 0;
+    text-align: center;
+    padding: 0 95px;
+    background-color: #F2CE14;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.abouteny:before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    content: url("/img/yellow-wave-l.svg");
+}
+
+.abouteny:after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    content: url("/img/yellow-wave-r.svg");
+}
+
+.aboutContainer {
+    width: 100%;
+    margin: auto 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: stretch;
+    z-index: 100;
+}
+
+
+.aboutColLeft,
+.aboutColRight {
+    width: 50%;
+    max-width: 500px;
+    min-width: 450px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-top: 45px;
+}
+
+.aboutColRight {
+    text-align: justify;
+}
+
+
+@media screen and (max-width: 768px) {
+    .abouteny {
+        padding: 0 5%;
+    }
+
+    .aboutColLeft,
+    .aboutColRight {
+        width: 100%;
+        max-width: inherit;
+        min-width: inherit;
+    }
+}
