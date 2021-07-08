@@ -84,11 +84,8 @@
   width: 45%;
 }
 
-.card:hover,
-.card:focus,
-.card:active {
-  color: #0070f3;
-  border-color: #0070f3;
+.card input {
+  border: 1px solid #0a0000;
 }
 
 .card h2 {
@@ -112,4 +109,10 @@
     width: 100%;
     flex-direction: column;
   }
+}
+
+.button {
+  border: 1px solid #0a0000;
+  border-radius: 5px;
+  background-color: burlywood;
 }
