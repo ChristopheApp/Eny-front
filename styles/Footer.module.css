@@ -1,0 +1,40 @@
+.footerContainer {
+    width: 100%;
+    min-height: 200px;
+    padding: 0 95px 20px;
+    border-radius: 15px 15px 0 0;
+
+    background-color: #1D1C1E;
+    position: relative;
+    z-index: 0;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.iconsFooter {
+    width: 20%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.icon {
+    width: 30px;
+    height: 30px;
+    margin-left: 20px;
+}
+
+@media screen and (max-width: 768px) {
+    .footerContainer {
+        padding: 0 5% 1%;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    .iconsFooter {
+        width: 100%;
+        justify-content: center;
+    }
+}

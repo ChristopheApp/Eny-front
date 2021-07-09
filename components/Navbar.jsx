@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-// import Button from './Button'
 import styles from '../styles/Navbar.module.css'
 import InternalLink from './InternalLink'
 const Navbar = ({ }) => {
@@ -11,7 +10,9 @@ const Navbar = ({ }) => {
     return (
         <>
             <nav id={styles.navbarDesktop}>
-                <Image src={"/img/logo-nav.svg"} alt="ENY logo" width={196} height={90} />
+                <Link href={"/"} passHref>
+                    <Image className={"logo-nav"} src={"/img/logo-nav.svg"} alt="ENY logo" width={196} height={90} />
+                </Link>
                 <ul className={styles.linksEny} >
                     <li>
                         <InternalLink name="Home" section="" top="1" />
@@ -42,12 +43,11 @@ const Navbar = ({ }) => {
                         </a>
                     </li>
                 </ul>
-                {/* <Button name="Get started" to="/dapp" /> */}
                 <Link href={"/dapp"} passHref>
-                <button className={styles.navButton}>
-                    {"Get started"}
-                </button>
-            </Link>
+                    <button className={styles.navButton}>
+                        {"Get started"}
+                    </button>
+                </Link>
             </nav>
 
         </>

@@ -69,7 +69,9 @@ p {
   color: #000;
 }
 
-a {
+a,
+button,
+.logo-nav {
   cursor: pointer;
 }
 

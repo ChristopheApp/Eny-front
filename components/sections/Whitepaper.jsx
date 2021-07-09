@@ -1,5 +1,5 @@
 import React from 'react'
-import Button from '../Button'
+import Link from 'next/link'
 import styles from '../../styles/Whitepaper.module.css'
 import Title from '../Title'
 const Whitepaper = () => {
@@ -8,7 +8,11 @@ const Whitepaper = () => {
             {/* White Paper */}
             <section id={styles["whitepaper-eny"]} >
                 <Title title="White Paper" sub="WhitePaper.WhitePaper.WhitePaper.WhitePaper.WhitePaper" />
-                <Button name="White Paper" to="/white-paper" />
+                <Link href={"/white-paper"} passHref>
+                    <button className={styles.whiteButton}>
+                        {"White Paper"}
+                    </button>
+                </Link>
             </section>
         </>
     );
