@@ -8,6 +8,7 @@ import { useState, useCallback, useEffect } from 'react'
 import Web3 from 'web3';
 
 import Erc20Abi from '../contracts/erc20ABI.json'
+import ICOContractAbi from '../contracts/ICOContractABI.json'
 
 export default function Home() {
 
@@ -18,12 +19,12 @@ export default function Home() {
   const [accounts, setAccounts] = useState([]);
   const [balance, setBalance] = useState(0);
 
-  const [ENYtokenAddress] = useState("0x71363b88139a12a27cdb949bb12e60f10d295e25") // adresse du ENY token sur Rinkeby
-  const [multisigAddress] = useState("0x37BdE4fC119F17a0906b2A406DcA47C32C8E20e0") // adresse du contract Multisig pour déposer les eth
-  const [ICOAddress] = useState("") // Adresse qui détient les ENY pour les envoyer
+  const [ENYtokenAddress] = useState("0x86B88770bC0122A957CABFa41775728824F2cc29") // adresse du ENY token sur Rinkeby
+  const [enyWalletSupply] = useState("0x2B6d5d6A6f588084dC9565ffA1b7f28fe60D479E") // adresse en commun qui contient la total supply
+  const [ICOContractAddress] = useState("0xD7B969F5e3FA2585D02f778Ab82c045cB35BB7B4") // Adresse qui détient les ENY pour les envoyer
   
-  const [enyPrice] = useState(0.05) // Le prix d'un ENY
-  const [ethPrice, setEthPrice] = useState(2200) // Le prix en dollars de l'eth (à mettre à jour avec API)
+  const [enyPrice, setEnyPrice] = useState(0) // Le prix d'un ENY
+  const [ethPrice, setEthPrice] = useState(0) // Le prix en dollars de l'eth (à mettre à jour avec API)
 
   const [enyAmount, setEnyAmount] = useState(0) // Champ de l'input Eny
   const [ethAmount, setEthAmount] = useState(0) // Champ de l'input Eth
@@ -61,9 +62,9 @@ export default function Home() {
   /*
     Connection au chargement de la page
   */
-  useEffect(() => {
+  useEffect(async () => {
     const displayAccConnect =  () => console.log("connect")
-    const displayChainChanged =  () => console.log("chainChanged")
+    const displayChainChanged =  () => {console.log("chainChanged"); initIcoContract() }
     const displayAccChanged =  () => {
       const getAccounts = async () => setAccounts(await web3.eth.getAccounts())
 
@@ -78,6 +79,9 @@ export default function Home() {
     window.ethereum.on('chainChanged', displayChainChanged)
     window.ethereum.on('accountsChanged', displayAccChanged)
 
+    getEthPrice()
+    initIcoContract()  
+
     return () => {
       if (window.ethereum.removeListener) {
         window.ethereum.removeListener('connect', displayAccConnect)
@@ -90,7 +94,7 @@ export default function Home() {
   useEffect(() => {
     // Accounts
     const getAccounts = async () => setAccounts(await web3.eth.getAccounts())
-    const getBalance = async () => setBalance(await web3.eth.getBalance(accounts[0]))
+    const getBalance = async () => setBalance(web3.utils.fromWei(await web3.eth.getBalance(accounts[0])))
 
     if (accounts.length == 0) getAccounts()
     if (accounts.length > 0) getBalance()
@@ -101,16 +105,57 @@ export default function Home() {
       setIsConnectedWeb3(false)
     else
       setIsConnectedWeb3(true)
+
   
   }, [isConnectedWeb3, accounts])
 
+
+  // Initialise le contract de l'ico
+  const initIcoContract = async () => {
+    console.log("init Contract")
+
+    const icoContract = new web3.eth.Contract(
+      ICOContractAbi,
+      ICOContractAddress
+      )
+    
+    try {
+      const tokensSold = await icoContract.methods.tokensSold().call()
+      const tokenPrice = await icoContract.methods.tokenPrice().call()
+      const tokenIcoSupply = await icoContract.methods.tokenIcoSupply().call()
+      const icoState = await icoContract.methods.icoState().call()
+      
+      console.log(tokensSold)
+      setEnyPrice(web3.utils.fromWei(tokenPrice))
+      console.log(tokenIcoSupply)
+      console.log(icoState)
+      
+      
+    } catch (error) {
+      alert("You must be on the Rinkebi network.")
+    }
+  }
+
+  // Récupérér le pris en dollars de l'eth grace à l'api
+  const getEthPrice = async () => {
+    try {
+      const rawResponse = await fetch("https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=EUR,USD&api_key=c7582671050eb2459c1ce20d8648c6a98125675220aedd35943ccb246a0feb70")
+      const response = await rawResponse.json();
+      setEthPrice(response.USD)
+      console.log(response)
+    } catch(error) {
+      setEthPrice(0)
+      alert("Impossible de récupérer le prix de l'eth, reviens plus tard.")
+    }
+  }
 
   
   // Envoi des ETH au multisig pour revoir ensuite des ENY
   const sendEth = async () => {
     // Sécurise le montant, pour pas envoyer plus d'ENY si on change l'input entre les 2 Transactions
     // Peut aussi se faire en désactivant les input
-    const tokenAmount = enyAmount
+    console.log(ethAmount)
+    const tokenAmount = web3.utils.toWei(ethAmount.toString())
     const receiptAddress = accounts[0]
 
     console.log(tokenAmount)
@@ -118,13 +163,7 @@ export default function Home() {
 
     if(ethAmount <= 0)
       alert("Invalid amount. Must be > 0")
-    else {
-
-      /* 
-      Nécessite une vérification d'être sur le bon réseau (ici Rinkebi)
-      A quel moment ? je sais pas trop
-      */
-     
+    else {     
       /*
       Chargement du contrat du token ENY
       */
@@ -132,106 +171,59 @@ export default function Home() {
         Erc20Abi,
         ENYtokenAddress
         )
-      
+
+      /*
+      Chargement du contrat de l'ico
+      */
+      const icoContract = new web3.eth.Contract(
+        ICOContractAbi,
+        ICOContractAddress
+        )
+
+      /* 
+      Nécessite une vérification d'être sur le bon réseau (ici Rinkebi)
+      A quel moment ? je sais pas trop
+      */
       try {
         const name = await enyContract.methods.name().call()
         const balance = await enyContract.methods.balanceOf(accounts[0]).call()
         const symbol = await enyContract.methods.symbol().call()
-        
+
         console.log(name)
         console.log(balance)
         console.log(symbol)
-        
-        // Fonctionne bien, on recoit les eth sur le multisig https://rinkeby.gnosis-safe.io/app/#/safes/0x37BdE4fC119F17a0906b2A406DcA47C32C8E20e0/balances
-        web3.eth.sendTransaction({
-          from: accounts[0],
-          to: multisigAddress, 
-          value: web3.utils.toWei(ethAmount) 
-        })
-        .once('transactionHash', function(hash){
-          console.log(hash)
-        })
-        .once('confirmation', function() {
-          console.log("Transaction confirmed");
-          
-          // Si la transaction se passe bien
-          recevoirEnyTokens(receiptAddress, tokenAmount, enyContract)
-        })
-        
+
+        // Si on est sur le bon réseau on peut faire la transaction
+        try {
+          icoContract.methods.buyAmountTokens().send({from: receiptAddress, value: tokenAmount})
+          .once('transactionHash', function(hash){
+            console.log(hash)
+          })
+          .once('confirmation', function() {
+            console.log("Transaction confirmed");
+            
+            // Si la transaction se passe bien
+          })
+  
+        } catch (error) {
+          alert("Error send.")
+        }
+
       } catch (error) {
-        alert("You must be on the Rinkebi network.")
-      }
+        alert("The contract network is not valid.")
+      }      
       
     }
   }
-    
-  
-    /*
-      NE FONCTIONNE PAS !
-      Fonction appeler lorsque l'envoi d'ether sur le multisig s'est bien passé
-      Trouver le moyen pour que l'on puisse recevoir automatiquement les ENY 
-      Actuellement c'est celui qui doit recevoir qui les envoi (il faut signé et payer les gas)
-    */
-    const recevoirEnyTokens = async (receiptAddress, tokenAmount, erc20Contract) => {
 
-      console.log(await erc20Contract.methods.balanceOf("0x17aA29f9C48D557E5d582F8C1459b19472EAe0A1").call())
-      try {
-        console.log(erc20Contract)
-        console.log(receiptAddress)
-        console.log(tokenAmount)                              // (ma 2eme adresse pour test)
-        const receipt = await erc20Contract.methods.transfer("0x17aA29f9C48D557E5d582F8C1459b19472EAe0A1", web3.utils.toWei(tokenAmount)).send({from: receiptAddress}) // Pas la bonne méthode, peut etre plus un transferFrom avec Allowance
-        // .once('transactionHash', function(hash){
-        //   console.log(hash)
-        // })
-        // .once('confirmation', function() {
-        //   console.log("Transaction confirmed");
-        // })
-        console.log(receipt)
-      } catch (error) {
-        alert("Error send.")
-      }
-  }
-
-  const onChangeEthInput = (value) => {
-    console.log(value)
-    setEthAmount(value) // Actualise la valeur en ETH
-    setEnyAmount(ethToEny(value)) // Actualise la valeur en Eny
-    setDisplayTotalAmountInDollars(ethToDollars(value)) // Actualise la valeur en $
-
-  }
-
+  // Changement de valeur dans l'input ENY
   const onChangeEnyInput = (value) => {
     console.log(value)
-    setEnyAmount(value) // Actualise la valeur en Eny
-    setEthAmount(enyToEth(value)) // Actualise la valeur en ETH
-    setDisplayTotalAmountInDollars(enyToDollars(value)) // Actualise la valeur en $
+    setEnyAmount(value) // Actualise le montant d'eny
+    setEthAmount(value * enyPrice) // Actualise le montant d'eth 
+    setDisplayTotalAmountInDollars(value * enyPrice * ethPrice) // Actualise la valeur en $
     
   }
-
-  /*
-    Conversion masquer le temps de tester
-  */
-
-  // Conversion Eth en Dollars
-  const ethToDollars = (eth) => {
-    return eth //* ethPrice
-  }
-
-  // Conversion Eny en Dollars
-  const enyToDollars = (eny) => {
-    return eny //* enyPrice
-  }
-
-  // Conversion Eth en Eny
-  const ethToEny = (eth) => {
-    return eth //* ethPrice / enyPrice
-  }
-
-  // Conversion Eny en Eth
-  const enyToEth = (eny) => {
-    return eny //* enyPrice / ethPrice
-  }
-
 
   return (
     <div className={styles.container}>
@@ -249,7 +241,7 @@ export default function Home() {
         </h1>
 
         <p className={styles.description}>
-          <code className={styles.code}>$ENY</code>
+          <code className={styles.code}>Buy $ENY</code>
         </p>
 
         <div>
@@ -259,23 +251,17 @@ export default function Home() {
             <button onClick={connectToWeb3} className={styles.button}>Connect web3 <p style={{color: CouleurPastille}}>pastille</p> </button>
           </div>
 
-        <div className={styles.card}>
+        <div className={styles.card}>            
             <div className={styles.subCard}>
-              <p>Buy ENY</p>
-              <p></p>
-            </div>
-            
-            <div className={styles.subCard}>
-              <p>ETH ({ethPrice} $)</p>
-              <input onChange={e => onChangeEthInput(e.target.value)} value={ethAmount} type="number"  />
+              <p>Balance ETH : {(balance)} </p>
             </div>
 
             <div className={styles.subCard}>
-              <p>ENY ({enyPrice} $)</p>
+              <p>ENY</p>
               <input onChange={e => onChangeEnyInput(e.target.value)} value={enyAmount} type="number"  />
             </div>
             
-            <button onClick={sendEth} className={styles.button}>Recevoir {enyAmount} ENY ({displayTotalAmountInDollars} $)</button>
+            <button onClick={sendEth} className={styles.button}>Buy ({ethAmount} eth ~ {displayTotalAmountInDollars} $)</button>
           </div>
 
         
