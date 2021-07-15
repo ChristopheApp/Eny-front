@@ -41,6 +41,8 @@
 
 .heroBtnContainer {
     width: 100%;
+    display: flex;
+    justify-content: space-evenly;
 }
 
 .counterContainer {
@@ -119,5 +121,10 @@
 
     .counter {
         padding: 20px;
+    }
+
+    .heroBtnContainer{
+        flex-direction: column;
+        align-items: center;
     }
 }

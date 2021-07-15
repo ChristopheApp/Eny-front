@@ -4,6 +4,7 @@ import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 
 import Navbar from '../components/Navbar'
+import MobileNav from '../components/MobileNav'
 import Hero from '../components/sections/Hero'
 import About from '../components/sections/About'
 import Roadmap from '../components/sections/Roadmap'
@@ -23,7 +24,8 @@ export default function Home() {
         <link rel="icon" href="/wheelie1.svg" />
       </Head>
 
-      <Navbar />
+      {/* <Navbar /> */}
+      <MobileNav />
       <main className={styles.main}>
         <Hero />
        <About/>

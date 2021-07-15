@@ -1,4 +1,4 @@
-#navbarDesktop{
+#navbarDesktop {
     width: 100%;
     max-width: 100vw;
     height: 94px;
@@ -7,22 +7,24 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    z-index: 180; 
+    z-index: 180;
 }
+
 .linksEny {
+    /* width: 70%; */
     width: 70%;
     display: flex;
     justify-content: space-around;
     align-items: center;
 }
 
-.linksEny li{
+.linksEny li {
     font-size: 18px;
     font-weight: 500;
     line-height: 22px;
 }
 
-.navButton{
+.navButton {
     width: 152px;
     height: 56px;
     background-color: #fff;
@@ -35,8 +37,23 @@
     text-transform: uppercase;
 }
 
+
 @media screen and (max-width: 768px) {
-    #navbarDesktop{
-        display: none;
+    /* .linksEny {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background-color: red;
+        width: 100%;
+        height: 100vh;
+        z-index: inherit;
+        display: flex;
+        flex-direction: column;
+        visibility: hidden;
     }
+
+    .mobile-menu {
+        display: block;
+
+    } */
 }

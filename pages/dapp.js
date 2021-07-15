@@ -2,7 +2,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 
-import Navbar from '../components/Navbar'
+import MobileNav from '../components/MobileNav'
 
 import { useState, useCallback, useEffect } from 'react'
 import Web3 from 'web3';
@@ -242,7 +242,7 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-      <Navbar />
+          <MobileNav />
 
         <h1 className={styles.title}>
           En Y, Le token préféré des OVNI

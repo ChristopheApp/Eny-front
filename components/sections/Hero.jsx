@@ -8,14 +8,14 @@ const Hero = () => {
     return (
         <>
             {/* Hero */}
-            <section className={styles.heroEny}>
+            <section className={styles.heroEny} id="hero-eny">
                 <div className={styles.heroContainer} >
-                    <div className={styles.coLr} >
+                    <div className={`${styles.coLr}`} >
                         <h1>En Y, le token qui cabre sur le marché ! </h1>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum volutpat bibendum dolor ut consequat. Nam commodo tortor id tortor tincidunt maximus. </p>
                         <div className={styles.heroBtnContainer}>
-                            <Button name="Get started" to={"/"} />
-                            <Button name="White Paper" to={"/dapp"} />
+                            <Button name="Get started" to={"/"} margin={1} />
+                            <Button name="White Paper" to={"/dapp"} margin={1} />
                         </div>
                     </div>
                     <div className={styles.coLl} >

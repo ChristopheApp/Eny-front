@@ -1,0 +1,5 @@
+export { default as Discord } from './Discord'
+export { default as Illu } from './Illu'
+export { default as LogoNav } from './LogoNav'
+export { default as Telegram } from './Telegram'
+export { default as Twitter } from './Twitter'

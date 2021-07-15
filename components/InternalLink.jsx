@@ -11,7 +11,7 @@ const InternalLink = ({ name, section }) => {
                 smooth={true}
                 duration={1000}
                 isDynamic={true}
-                offset={-100}
+                offset={-110}
             >
                 {name}
             </Link>
