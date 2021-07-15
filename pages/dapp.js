@@ -2,7 +2,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 
-import MobileNav from '../components/MobileNav'
+import DappNav from '../components/dapp/DappNav'
 
 import { useState, useCallback, useEffect } from 'react'
 import Web3 from 'web3';
@@ -10,11 +10,13 @@ import Web3 from 'web3';
 import Erc20Abi from '../contracts/erc20ABI.json'
 import ICOContractAbi from '../contracts/ICOContractABI.json'
 
+
 export default function Home() {
 
   const [web3] = useState(new Web3(Web3.givenProvider || "ws://localhost:8545"));
   const [isConnectedWeb3, setIsConnectedWeb3] = useState(false);
-  const [CouleurPastille, setCouleurPastille] = useState("red") // le moot pastille remplace une icone avec un simple cercle rouge ou vert si on est connecté ou pas comme sur etherscan dans write contract
+  // REMOVE
+  // const [CouleurPastille, setCouleurPastille] = useState("red") // le moot pastille remplace une icone avec un simple cercle rouge ou vert si on est connecté ou pas comme sur etherscan dans write contract
 
   const [accounts, setAccounts] = useState([]);
   const [balance, setBalance] = useState(0);
@@ -22,7 +24,7 @@ export default function Home() {
   const [ENYtokenAddress] = useState("0x86B88770bC0122A957CABFa41775728824F2cc29") // adresse du ENY token sur Rinkeby
   const [enyWalletSupply] = useState("0x2B6d5d6A6f588084dC9565ffA1b7f28fe60D479E") // adresse en commun qui contient la total supply
   const [ICOContractAddress] = useState("0xD7B969F5e3FA2585D02f778Ab82c045cB35BB7B4") // Adresse qui détient les ENY pour les envoyer
-  
+
   const [enyPrice, setEnyPrice] = useState(0) // Le prix d'un ENY
   const [ethPrice, setEthPrice] = useState(0) // Le prix en dollars de l'eth (à mettre à jour avec API)
 
@@ -33,45 +35,46 @@ export default function Home() {
 
   const connectToWeb3 = useCallback(
     async () => {
-      if(window.ethereum) {
+      if (window.ethereum) {
         try {
-          await window.ethereum.request({method: 'eth_requestAccounts'})
+          await window.ethereum.request({ method: 'eth_requestAccounts' })
 
           setIsConnectedWeb3(true)
-        //  web3.eth.net.getId()
-        //  .then(setNetworkId)
-         
+          //  web3.eth.net.getId()
+          //  .then(setNetworkId)
+
         } catch (err) {
           console.error(err)
         }
       } else {
         alert("Install Metamask")
       }
-    }
+    }, []
   )
 
+  //REMOVE
   // Juste pour voir plus facilement si on est connecté ou pas 
-  useEffect(() => {
-    if(isConnectedWeb3)
-      setCouleurPastille('green')
-    else
-      setCouleurPastille('red')
+  // useEffect(() => {
+  //   if (isConnectedWeb3)
+  //     setCouleurPastille('green')
+  //   else
+  //     setCouleurPastille('red')
 
-  }, [isConnectedWeb3])
+  // }, [isConnectedWeb3])
 
   /*
     Connection au chargement de la page
   */
   useEffect(async () => {
-    const displayAccConnect =  () => console.log("connect")
-    const displayChainChanged =  () => {console.log("chainChanged"); initIcoContract() }
-    const displayAccChanged =  () => {
+    const displayAccConnect = () => console.log("connect")
+    const displayChainChanged = () => { console.log("chainChanged"); initIcoContract() }
+    const displayAccChanged = () => {
       const getAccounts = async () => setAccounts(await web3.eth.getAccounts())
 
       const acc = getAccounts()
       console.log(acc)
 
-      if(acc.length == 0)
+      if (acc.length == 0)
         setIsConnectedWeb3(false)
     }
 
@@ -80,7 +83,7 @@ export default function Home() {
     window.ethereum.on('accountsChanged', displayAccChanged)
 
     getEthPrice()
-    initIcoContract()  
+    initIcoContract()
 
     return () => {
       if (window.ethereum.removeListener) {
@@ -99,14 +102,14 @@ export default function Home() {
     if (accounts.length == 0) getAccounts()
     if (accounts.length > 0) getBalance()
 
-    console.log(accounts)
+    // console.log(accounts)
 
-    if(accounts.length == 0)
+    if (accounts.length == 0)
       setIsConnectedWeb3(false)
     else
       setIsConnectedWeb3(true)
 
-  
+
   }, [isConnectedWeb3, accounts])
 
 
@@ -117,20 +120,20 @@ export default function Home() {
     const icoContract = new web3.eth.Contract(
       ICOContractAbi,
       ICOContractAddress
-      )
-    
+    )
+
     try {
       const tokensSold = await icoContract.methods.tokensSold().call()
       const tokenPrice = await icoContract.methods.tokenPrice().call()
       const tokenIcoSupply = await icoContract.methods.tokenIcoSupply().call()
       const icoState = await icoContract.methods.icoState().call()
-      
+
       console.log(tokensSold)
       setEnyPrice(web3.utils.fromWei(tokenPrice))
       console.log(tokenIcoSupply)
       console.log(icoState)
-      
-      
+
+
     } catch (error) {
       alert("You must be on the Rinkebi network.")
     }
@@ -143,13 +146,13 @@ export default function Home() {
       const response = await rawResponse.json();
       setEthPrice(response.USD)
       console.log(response)
-    } catch(error) {
+    } catch (error) {
       setEthPrice(0)
       alert("Impossible de récupérer le prix de l'eth, reviens plus tard.")
     }
   }
 
-  
+
   // Envoi des ETH au multisig pour revoir ensuite des ENY
   const sendEth = async () => {
     // Sécurise le montant, pour pas envoyer plus d'ENY si on change l'input entre les 2 Transactions
@@ -161,16 +164,16 @@ export default function Home() {
     console.log(tokenAmount)
     console.log(receiptAddress)
 
-    if(ethAmount <= 0)
+    if (ethAmount <= 0)
       alert("Invalid amount. Must be > 0")
-    else {     
+    else {
       /*
       Chargement du contrat du token ENY
       */
       const enyContract = new web3.eth.Contract(
         Erc20Abi,
         ENYtokenAddress
-        )
+      )
 
       /*
       Chargement du contrat de l'ico
@@ -178,7 +181,7 @@ export default function Home() {
       const icoContract = new web3.eth.Contract(
         ICOContractAbi,
         ICOContractAddress
-        )
+      )
 
       /* 
       Nécessite une vérification d'être sur le bon réseau (ici Rinkebi)
@@ -195,24 +198,24 @@ export default function Home() {
 
         // Si on est sur le bon réseau on peut faire la transaction
         try {
-          icoContract.methods.buyAmountTokens().send({from: receiptAddress, value: tokenAmount})
-          .once('transactionHash', function(hash){
-            console.log(hash)
-          })
-          .once('confirmation', function() {
-            console.log("Transaction confirmed");
-            
-            // Si la transaction se passe bien
-          })
-  
+          icoContract.methods.buyAmountTokens().send({ from: receiptAddress, value: tokenAmount })
+            .once('transactionHash', function (hash) {
+              console.log(hash)
+            })
+            .once('confirmation', function () {
+              console.log("Transaction confirmed");
+
+              // Si la transaction se passe bien
+            })
+
         } catch (error) {
           alert("Error send.")
         }
 
       } catch (error) {
         alert("The contract network is not valid.")
-      }      
-      
+      }
+
     }
   }
 
@@ -222,7 +225,7 @@ export default function Home() {
     setEnyAmount(value) // Actualise le montant d'eny
     setEthAmount(value * enyPrice) // Actualise le montant d'eth 
     setDisplayTotalAmountInDollars(value * enyPrice * ethPrice) // Actualise la valeur en $
-    
+
   }
 
   return (
@@ -234,7 +237,12 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-          <MobileNav />
+        <DappNav
+          stateConection={isConnectedWeb3}
+          connectFunc={connectToWeb3}
+          balance={balance}
+          address={accounts[0]}
+        />
 
         <h1 className={styles.title}>
           En Y, Le token préféré des OVNI
@@ -245,34 +253,35 @@ export default function Home() {
         </p>
 
         <div>
-            {/* { <a href={`https://rinkebi.etherscan.io/`} target="_blank" rel="noreferrer"  >
+          {/* { <a href={`https://rinkebi.etherscan.io/`} target="_blank" rel="noreferrer"  >
                 rinkebi ↗️
               </a> } */}
-            <button onClick={connectToWeb3} className={styles.button}>Connect web3 <p style={{color: CouleurPastille}}>pastille</p> </button>
+          {/* REMOVE */}
+          {/* <button onClick={connectToWeb3} className={styles.button}>Connect web3 <p style={{ color: CouleurPastille }}>pastille</p> </button> */}
+        </div>
+
+        <div className={styles.card}>
+          <div className={styles.subCard}>
+            <p>Balance ETH : {(balance)} </p>
           </div>
 
-        <div className={styles.card}>            
-            <div className={styles.subCard}>
-              <p>Balance ETH : {(balance)} </p>
-            </div>
-
-            <div className={styles.subCard}>
-              <p>ENY</p>
-              <input onChange={e => onChangeEnyInput(e.target.value)} value={enyAmount} type="number"  />
-            </div>
-            
-            <button onClick={sendEth} className={styles.button}>Buy ({ethAmount} eth ~ {displayTotalAmountInDollars} $)</button>
+          <div className={styles.subCard}>
+            <p>ENY</p>
+            <input onChange={e => onChangeEnyInput(e.target.value)} value={enyAmount} type="number" />
           </div>
 
-        
+          <button onClick={sendEth} className={styles.button}>Buy ({ethAmount} eth ~ {displayTotalAmountInDollars} $)</button>
+        </div>
+
+
       </main>
 
       <footer className={styles.footer}>
-        
-          Powered by LA TEAM JUL{' '}
-          <span className={styles.logo}>
-            <Image src="/signejul1.svg" alt="Signe Jul" width={30} height={20} />
-          </span>
+
+        Powered by LA TEAM JUL{' '}
+        <span className={styles.logo}>
+          <Image src="/signejul1.svg" alt="Signe Jul" width={30} height={20} />
+        </span>
       </footer>
     </div>
   )
