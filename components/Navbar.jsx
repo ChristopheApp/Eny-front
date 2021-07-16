@@ -48,21 +48,21 @@ const Navbar = ({ }) => {
                         <li>
                             <InternalLink name="News" section="news-eny" top="0" />
                         </li>
-                        <li><a href="/whitepaper" target="_blank" rel="noopener noreferrer" >{"White Paper"}</a></li>
+                        <li><Link href="/whitepaper" target="_blank" rel="noopener noreferrer" >{"White Paper"}</Link></li>
                         <li>
-                            <a target="_blank" rel="noopener noreferrer" href="https://discord.com">
+                            <Link target="_blank" rel="noopener noreferrer" href="https://discord.com">
                                 <Image src="/img/discord.svg" alt="Icon discord" width={30} height={30} />
-                            </a>
+                           </Link>
                         </li>
                         <li>
-                            <a target="_blank" rel="noopener noreferrer" href="https://telegram.com" >
+                            <Link target="_blank" rel="noopener noreferrer" href="https://telegram.com" >
                                 <Image src="/img/telegram.svg" alt="Icon telegram" width={30} height={30} />
-                            </a>
+                           </Link>
                         </li>
                         <li>
-                            <a target="_blank" rel="noopener noreferrer" href="https://twitter.com" >
+                            <Link target="_blank" rel="noopener noreferrer" href="https://twitter.com" >
                                 <Image src="/img/twitter.svg" alt="Icon twitter" width={30} height={30} />
-                            </a>
+                           </Link>
                         </li>
                     </ul>
                     <Link href={"/dapp"} passHref>

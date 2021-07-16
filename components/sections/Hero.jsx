@@ -14,8 +14,8 @@ const Hero = () => {
                         <h1>En Y, le token qui cabre sur le marché ! </h1>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum volutpat bibendum dolor ut consequat. Nam commodo tortor id tortor tincidunt maximus. </p>
                         <div className={styles.heroBtnContainer}>
-                            <Button name="Get started" to={"/"} margin={1} />
-                            <Button name="White Paper" to={"/dapp"} margin={1} />
+                            <Button name="Get started" to={"/dapp"} margin={1} />
+                            <Button name="White Paper" to={"/whitepaper"} margin={1} />
                         </div>
                     </div>
                     <div className={styles.coLl} >

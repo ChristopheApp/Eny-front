@@ -8,7 +8,7 @@ const Whitepaper = () => {
             {/* White Paper */}
             <section id={styles["whitepaper-eny"]} >
                 <Title title="White Paper" sub="WhitePaper.WhitePaper.WhitePaper.WhitePaper.WhitePaper" />
-                <Link href={"/white-paper"} passHref>
+                <Link href={"/whitepaper"} passHref>
                     <button className={styles.whiteButton}>
                         {"White Paper"}
                     </button>

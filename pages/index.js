@@ -3,7 +3,6 @@ import { useState, useCallback, useEffect } from 'react'
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 
-import Navbar from '../components/Navbar'
 import MobileNav from '../components/MobileNav'
 import Hero from '../components/sections/Hero'
 import About from '../components/sections/About'

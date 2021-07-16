@@ -65,15 +65,15 @@ const MobileNav = () => {
                             </li>
                         </ul>
                         <div className={"flex flex-shrink-0 w-40 justify-around"}>
-                            <a target="_blank" rel="noopener noreferrer" href="https://discord.com" className={"mx-2 my-2 lg:my-0 hover:text-OM transition delay-100 duration-300 ease-in-out transform hover:scale-125"}>
+                            <Link target="_blank" rel="noopener noreferrer" href="https://discord.com" passHref className={"mx-2 my-2 lg:my-0 hover:text-OM transition delay-100 duration-300 ease-in-out transform hover:scale-125"}>
                                 <Discord />
-                            </a>
-                            <a target="_blank" rel="noopener noreferrer" href="https://telegram.com" className={"mx-2 my-2 lg:my-0 hover:text-OM transition delay-100 duration-300 ease-in-out transform hover:scale-125"}>
+                            </Link>
+                            <Link target="_blank" rel="noopener noreferrer" href="https://telegram.com" passHref className={"mx-2 my-2 lg:my-0 hover:text-OM transition delay-100 duration-300 ease-in-out transform hover:scale-125"}>
                                 <Telegram />
-                            </a>
-                            <a target="_blank" rel="noopener noreferrer" href="https://twitter.com" className={"mx-2 my-2 lg:my-0 hover:text-OM transition delay-100 duration-300 ease-in-out transform hover:scale-125"}>
+                            </Link>
+                            <Link target="_blank" rel="noopener noreferrer" href="https://twitter.com" passHref className={"mx-2 my-2 lg:my-0 hover:text-OM transition delay-100 duration-300 ease-in-out transform hover:scale-125"}>
                                 <Twitter />
-                            </a>
+                            </Link>
                         </div>
                         <div className="flex flex-grow-0 flex-col lg:flex-row">
                             <Button name="Get started" to={"/dapp"} margin={1} />
