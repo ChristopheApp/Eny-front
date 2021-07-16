@@ -7,10 +7,9 @@ const Button = ({ name, to, margin, func }) => {
         <>
             <Link href={to} passHref>
                 <button
-                    onClick={func && ""}
-                    // className={styles.enyButton}
+                    onClick={func && func}
                     className={` ${styles.enyButton} 
-                ${!margin ? " " : styles.navBtn} transition delay-100 duration-300 ease-in-out`}
+                ${!margin ? " " : styles.navBtn} transition delay-100 duration-300 ease-in-out hover:bg-bonne-mere`}
                 >
                     {name}
                 </button>

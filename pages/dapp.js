@@ -237,25 +237,26 @@ export default function Home() {
         <title>ENY Token</title>
         <meta name="description" content="En Y Token - Official web site" />
         <link rel="icon" href="/wheelie1.svg" />
+        
       </Head>
 
-      <main className={styles.main}>
-        <DappNav
-          stateConection={isConnectedWeb3}
-          connectFunc={connectToWeb3}
-          balance={balance}
-          address={accounts[0]}
-        />
-        <DappIco
-          balance={balance}
-          enyAmount={enyAmount}
-          sendEth={sendEth}
-          ethAmount={ethAmount}
-          displayTotalAmountInDollars={displayTotalAmountInDollars}
-          onChangeEnyInput={onChangeEnyInput}
-        />
-        {/* REMOVE */}
-        {/* 
+        <main className={styles.main}>
+          <DappNav
+            stateConection={isConnectedWeb3}
+            connectFunc={connectToWeb3}
+            balance={balance}
+            address={accounts[0]}
+          />
+          <DappIco
+            balance={balance}
+            enyAmount={enyAmount}
+            sendEth={sendEth}
+            ethAmount={ethAmount}
+            displayTotalAmountInDollars={displayTotalAmountInDollars}
+            onChangeEnyInput={onChangeEnyInput}
+          />
+          {/* REMOVE */}
+          {/* 
         <h1 className={styles.title}>
           En Y, Le token préféré des OVNI
         </h1>
@@ -263,20 +264,20 @@ export default function Home() {
         <p className={styles.description}>
           <code className={styles.code}>Buy $ENY</code>
         </p> */}
-        {/* REMOVE */}
-        <div>
-          {/* { <a href={`https://rinkebi.etherscan.io/`} target="_blank" rel="noreferrer"  >
+          {/* REMOVE */}
+          <div>
+            {/* { <a href={`https://rinkebi.etherscan.io/`} target="_blank" rel="noreferrer"  >
                 rinkebi ↗️
               </a> } */}
-          {/* REMOVE */}
-          {/* <button onClick={connectToWeb3} className={styles.button}>Connect web3 <p style={{ color: CouleurPastille }}>pastille</p> </button> */}
-          {/* REMOVE */}
+            {/* REMOVE */}
+            {/* <button onClick={connectToWeb3} className={styles.button}>Connect web3 <p style={{ color: CouleurPastille }}>pastille</p> </button> */}
+            {/* REMOVE */}
 
-        </div>
+          </div>
 
-        {/* Input - to => Component */}
-        {/* REMOVE */}
-        {/* <div className={styles.card}>
+          {/* Input - to => Component */}
+          {/* REMOVE */}
+          {/* <div className={styles.card}>
           <div className={styles.subCard}>
             <p>Balance ETH : {(balance)} </p>
           </div>
@@ -288,12 +289,12 @@ export default function Home() {
 
           <button onClick={sendEth} className={styles.button}>Buy ({ethAmount} eth ~ {displayTotalAmountInDollars} $)</button>
         </div> */}
-        {/* REMOVE */}
+          {/* REMOVE */}
 
 
-      </main>
+        </main>
 
-      {/* <footer className={styles.footer}>
+        {/* <footer className={styles.footer}>
 
         Powered by LA TEAM JUL{' '}
         <span className={styles.logo}>
@@ -302,5 +303,5 @@ export default function Home() {
       </footer> */}
 
     </div>
-  )
+      )
 }
