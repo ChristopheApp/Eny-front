@@ -3,6 +3,7 @@ import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 
 import DappNav from '../components/dapp/DappNav'
+import DappIco from '../components/dapp/DappIco'
 
 import { useState, useCallback, useEffect } from 'react'
 import Web3 from 'web3';
@@ -17,6 +18,7 @@ export default function Home() {
   const [isConnectedWeb3, setIsConnectedWeb3] = useState(false);
   // REMOVE
   // const [CouleurPastille, setCouleurPastille] = useState("red") // le moot pastille remplace une icone avec un simple cercle rouge ou vert si on est connecté ou pas comme sur etherscan dans write contract
+  //REMOVE
 
   const [accounts, setAccounts] = useState([]);
   const [balance, setBalance] = useState(0);
@@ -61,6 +63,7 @@ export default function Home() {
   //     setCouleurPastille('red')
 
   // }, [isConnectedWeb3])
+  //REMOVE
 
   /*
     Connection au chargement de la page
@@ -243,24 +246,37 @@ export default function Home() {
           balance={balance}
           address={accounts[0]}
         />
-
+        <DappIco
+          balance={balance}
+          enyAmount={enyAmount}
+          sendEth={sendEth}
+          ethAmount={ethAmount}
+          displayTotalAmountInDollars={displayTotalAmountInDollars}
+          onChangeEnyInput={onChangeEnyInput}
+        />
+        {/* REMOVE */}
+        {/* 
         <h1 className={styles.title}>
           En Y, Le token préféré des OVNI
         </h1>
 
         <p className={styles.description}>
           <code className={styles.code}>Buy $ENY</code>
-        </p>
-
+        </p> */}
+        {/* REMOVE */}
         <div>
           {/* { <a href={`https://rinkebi.etherscan.io/`} target="_blank" rel="noreferrer"  >
                 rinkebi ↗️
               </a> } */}
           {/* REMOVE */}
           {/* <button onClick={connectToWeb3} className={styles.button}>Connect web3 <p style={{ color: CouleurPastille }}>pastille</p> </button> */}
+          {/* REMOVE */}
+
         </div>
 
-        <div className={styles.card}>
+        {/* Input - to => Component */}
+        {/* REMOVE */}
+        {/* <div className={styles.card}>
           <div className={styles.subCard}>
             <p>Balance ETH : {(balance)} </p>
           </div>
@@ -271,18 +287,20 @@ export default function Home() {
           </div>
 
           <button onClick={sendEth} className={styles.button}>Buy ({ethAmount} eth ~ {displayTotalAmountInDollars} $)</button>
-        </div>
+        </div> */}
+        {/* REMOVE */}
 
 
       </main>
 
-      <footer className={styles.footer}>
+      {/* <footer className={styles.footer}>
 
         Powered by LA TEAM JUL{' '}
         <span className={styles.logo}>
           <Image src="/signejul1.svg" alt="Signe Jul" width={30} height={20} />
         </span>
-      </footer>
+      </footer> */}
+
     </div>
   )
 }
