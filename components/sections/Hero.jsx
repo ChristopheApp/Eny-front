@@ -12,7 +12,7 @@ const Hero = () => {
                 <div className={styles.heroContainer} >
                     <div className={`${styles.coLr}`} >
                         <h1 className={"uppercase"}>EnY, the token that raises on the market !</h1>
-                        <p>A crypto-currency created around a certain open-source philosophy, inspired by a French RAP icon. Start in "stunt" 🛵💨 to arrive in "T-max" 🏍️💨 In "Y" like your grandfather!</p>
+                        <p>{"A crypto-currency created around a certain open-source philosophy, inspired by a French RAP icon. Start in \"stunt\" 🛵💨 to arrive in \"T-max\" 🏍️💨 In \"Y\" like your grandfather!"}</p>
                         <div className={styles.heroBtnContainer}>
                             <Button name="Get started" to={"/dapp"} margin={1} />
                             <Button name="White Paper" to={"/whitepaper"} margin={1} />
