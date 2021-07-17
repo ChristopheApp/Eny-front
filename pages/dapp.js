@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.min.css'
 
 import DappNav from '../components/dapp/DappNav'
 import DappIco from '../components/dapp/DappIco'
+import Footer from '../components/Footer'
 
 import styles from '../styles/Home.module.css'
 
@@ -248,6 +249,8 @@ export default function Home() {
           isRinkeby
         />
       </main>
+
+      <Footer />
     </div>
   )
 }

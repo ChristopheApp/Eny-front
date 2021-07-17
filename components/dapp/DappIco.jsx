@@ -3,7 +3,6 @@ import Title from '../Title'
 import styles from '../../styles/Ico.module.css'
 import IcoInfo from './IcoInfo'
 import IcoInput from './IcoInput'
-import Loader from '../Loader'
 
 const DappIco = (props) => {
     const [presaleAddr, setPresaleAdrr] = useState(null)
@@ -28,12 +27,11 @@ const DappIco = (props) => {
 
     return (
         <>
-            <section id={"roadmap-key"} className={`${styles.IcoEny} h-section lg:px-sectionX md:px-sectionX-m`}>
+            <section id={"roadmap-key"} className={`${styles.IcoEny} h-full mb-16 lg:px-sectionX md:px-sectionX-m`}>
                 <Title title="ICO" sub="Initial Coin Offering" />
 
                 <div className={"w-full my-auto "} >
 
-        <Loader />
                     <h4>{"Wild Lauchpad"}</h4>
 
                     <div className={"w-full xl:p-sectionY md:p-2 rounded-xl flex lg:flex-row-reverse lg:justify-evenly lg:items-center flex-col items-center"} >
