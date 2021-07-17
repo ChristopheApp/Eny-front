@@ -33,7 +33,6 @@ export default function Home() {
   const [icoContract] = useState(new web3.eth.Contract(ICOContractAbi, ICOContractAddress))
   const [enyContract] = useState(new web3.eth.Contract(Erc20Abi, ENYtokenAddress))
   // const [enyWalletSupply] = useState("0x2B6d5d6A6f588084dC9565ffA1b7f28fe60D479E") // adresse en commun qui contient la total supply
-
   const [enyPrice, setEnyPrice] = useState(0) // Le prix d'un ENY
   const [ethPrice, setEthPrice] = useState(0) // Le prix en dollars de l'eth (à mettre à jour avec API)
 
@@ -44,11 +43,15 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false)
 
   const [isRinkeby, setIsRinkeby] = useState(false)
-
+  const [network, setNetwork] = useState(null)
+  const [isTransaction, setIsTransaction] = useState(false)
+  const [hash, setHash] = useState(null)
+  
   const connectToWeb3 = useCallback(
     async () => {
+
       let currentChainID = await web3.eth.net.getId()
-      console.log(currentChainID)
+      setNetwork(currentChainID)
       if (window.ethereum && currentChainID == 4) {
         setIsRinkeby(true)
         try {
@@ -66,28 +69,44 @@ export default function Home() {
     }, []
   )
 
+  // Function test network
+  const verifyNetwork = async () => {
+    let currentChainID = await web3.eth.getChainId()
+    // console.log(currentChainID)
+
+    if (currentChainID == 4) {
+      setIsRinkeby(true)
+      setNetwork(currentChainID)
+    } else {
+      setIsRinkeby(false)
+      setNetwork(currentChainID)
+    }
+  }
+
   /*
     Connection au chargement de la page
   */
-  useEffect(async () => {
-    const displayAccConnect = () => console.log("connect")
-    const displayChainChanged = () => { console.log("chainChanged"); initIcoContract() }
+  useEffect(() => {
+    const displayAccConnect = () => verifyNetwork()
+    const displayChainChanged = async () => {
+      // console.log("chainChanged")
+      initIcoContract()
+    }
     const displayAccChanged = () => {
       const getAccounts = async () => setAccounts(await web3.eth.getAccounts())
-
       const acc = getAccounts()
-      // console.log(acc)
-
       if (acc.length == 0)
         setIsConnectedWeb3(false)
     }
 
+    // GetAccount onchange 
     window.ethereum.on('connect', displayAccConnect)
     window.ethereum.on('chainChanged', displayChainChanged)
     window.ethereum.on('accountsChanged', displayAccChanged)
 
     getEthPrice()
     initIcoContract()
+    // verifyNetwork()
 
     return () => {
       if (window.ethereum.removeListener) {
@@ -99,17 +118,18 @@ export default function Home() {
   }, [])
 
   useEffect(() => {
+    verifyNetwork()
+    // console.log("FROM ROOt:"+isTransaction)
     // Accounts
     const getAccounts = async () => setAccounts(await web3.eth.getAccounts())
     const getBalance = async () => setBalance(web3.utils.fromWei(await web3.eth.getBalance(accounts[0])))
-
     if (accounts.length == 0) getAccounts()
     if (accounts.length > 0) getBalance()
     if (accounts.length == 0)
       setIsConnectedWeb3(false)
     else
       setIsConnectedWeb3(true)
-  }, [isConnectedWeb3, accounts, web3.eth, web3.utils])
+  }, [isConnectedWeb3, accounts, web3.eth, web3.utils, network, isTransaction])
 
 
   // Initialise le contract de l'ico
@@ -130,7 +150,7 @@ export default function Home() {
       setEnyPrice(tokenPriceEth)
     } catch (error) {
       // console.error(error)
-      warning("Please use Rinkeby network! ☠️", 5000)
+      // warning("APPELEZ TTTT Please use Rinkeby network! ☠️", 5000)
     }
   }
 
@@ -180,24 +200,30 @@ export default function Home() {
               warning("Transaction send ! \n Please confirm the transaction on metamask", 3000)
             })
             .once('transactionHash', function (hash) {
-              console.log(hash)
-              info("Tx Hash is here !", 8000, hash)
+              // console.log(hash)
+              setHash(hash)
+              info("Tx Hash is here !", 8000)
             })
             .once('confirmation', function () {
               success("Transaction has been confirmed !", 8000)
               // console.log("Transaction confirmed")
               initIcoContract()
               // Si la transaction se passe bien
+              // SET Transaction OK pour reload la balance
+              setIsTransaction(true)
             })
+          // SET Transaction END 
+          setIsTransaction(false)
 
         } catch (error) {
           // alert("Error send.")
           if (error.code === 4001) {
             setIsLoading(false)
+            setIsTransaction(false)
             danger(" 🙅‍♀️ You reject the transaction !", 8000)
           }
         }
-      }else{
+      } else {
         warning("Please use Rinkeby network! ☠️", 5000)
       }
 
@@ -246,7 +272,9 @@ export default function Home() {
           onChangeEnyInput={onChangeEnyInput}
           contractInfo={contractInfo}
           web3={web3}
-          isRinkeby
+          isRinkeby={isRinkeby}
+          hash={hash}
+
         />
       </main>
 

@@ -11,9 +11,9 @@ const News = () => {
                 <Title title="News" sub="News.News.News.News.News.News.News" />
                 <div className={styles.cardsContainer} >
                     <CardNews
-                        title={"Title"}
-                        subt="Subtitle"
-                        desc={"Lancement sur les chapeaux de roues les gens 🔥 Préparer vos sous-sous 💸"}
+                        title={"Development Start"}
+                        subt="Ouloulou!"
+                        desc={"We are proud to announce the beginning of the development of the project le sang!🔥 It smells good!"}
                     />
                     <CardNews
                         title={"Title"}

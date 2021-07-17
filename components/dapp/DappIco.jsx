@@ -85,6 +85,8 @@ const DappIco = (props) => {
                             ethAmount={props.ethAmount}
                             displayTotalAmountInDollars={props.displayTotalAmountInDollars}
                             sendEth={props.sendEth}
+                            isRinkeby={props.isRinkeby}
+                            hash={props.hash}
                         />
                     </div>
                 </div>

@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import Button from '../Button'
+import Link from 'next/link'
+import ButtonInput from './ButtonInput'
 
 const IcoInput = (props) => {
     return (
         <>
             <div className={"lg:w-2/5 w-full my-1 h-full xl:p-4 p-2 bg-white shadow-xl border-2 border-sombre border-opacity-70 rounded-xl flex flex-col items-center"}>
                 <div className={"border-allu border-b-2 py-2"} >
+                    {!props.isRinkeby && <p className={"text-le-sang text-medium uppercase font-medium"}>Must be in Rinkeby Network 😓</p>}
                     <p className={"font-medium m-0 p-0"}>
                         Your balance:
                     </p>
@@ -17,26 +19,27 @@ const IcoInput = (props) => {
                 <div className={"py-4 flex 2xl:w-full flex-col items-center 2xl:flex-row 2xl:justify-around mt-2 border-allu border-b-2 pt-2"}>
                     <label htmlFor="amount" className={"font-medium"}>Desired amount:</label>
                     <div className={"relative text-sombre w-full 2xl:w-1/3"}>
-                        {/* Input max = token left */}
                         <input
+                            disabled={!props.isRinkeby && "disabled"}
                             name={"amount"}
                             max="1300000"
+                            min="0"
                             type="number"
                             onChange={e => props.onChangeEnyInput(e.target.value)}
                             value={props.enyAmount}
                             className={
-                                "w-full disabled py-2 my-2 text-center text-md font-medium bg-blanco rounded-md pl-10 focus:outline-none focus:shadow-outline focus:bg-bonne-mere focus:bg-opacity-20 border-2 border-sombre transition delay-100 duration-300 ease-in-out"}
+                                "w-full py-2 my-2 text-center text-md font-medium bg-blanco rounded-md pl-10 focus:outline-none focus:shadow-outline focus:bg-bonne-mere focus:bg-opacity-20 border-2 border-sombre transition delay-100 duration-300 ease-in-out disabled:opacity-20"}
                             placeholder="Desired Amount"
                             autoComplete="off"
                         />
                         <span className="absolute inset-y-0 left-0 pl-2 font-medium flex items-center">ENY </span>
                     </div>
 
-                    <Button
+                    <ButtonInput
                         name={"Contribute"}
-                        to={""}
-                        margin={1}
                         func={props.sendEth}
+                        isRinkeby={props.isRinkeby}
+                    //Disabled if not Rinkeby 
                     />
                 </div>
                 <div className={"mt-2"}>
@@ -47,7 +50,25 @@ const IcoInput = (props) => {
                         <span className={"font-normal"}> {props.displayTotalAmountInDollars} $</span>
                     </div>
                 </div>
+                {props.hash &&
+                    <div className={"border-allu border-t-2 py-2 mt-2 truncate w-full"}>
+                        <p>Your Transaction Hash</p>
+                        <Link
+
+                            href={(`https://rinkeby.etherscan.io/tx/${props.hash}`)}
+                            passHref
+                        >
+                            <a
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className={"truncate font-light text-sm underline"}>
+                                {props.hash}
+                            </a>
+                        </Link>
+                    </div>
+                }
             </div>
+
         </>
     )
 }

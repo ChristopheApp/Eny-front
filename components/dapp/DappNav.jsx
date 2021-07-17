@@ -93,13 +93,13 @@ const DappNav = (props) => {
                                 </Link>
                             </li>
                             <li className={"text-lg font-medium hoverNavEny transition delay-100 duration-300 ease-in-out"}>
-                                <Link href="/airdrop" passHref className={"mx-2 my-2 lg:my-0 hover:text-OM transition delay-100 duration-300 ease-in-out transform hover:scale-125"}>
-                                    <a>Air Drop</a>
+                                <Link href="/airdrop" passHref  className={"mx-2 my-2 lg:my-0 hover:text-OM transition delay-100 duration-300 ease-in-out transform hover:scale-125"}>
+                                    <a className={" cursor-not-allowed "}>Air Drop</a>
                                 </Link>
                             </li>
                             <li className={"text-lg font-medium hoverNavEny transition delay-100 duration-300 ease-in-out"}>
                                 <Link href="/help" passHref className={"mx-2 my-2 lg:my-0 hover:text-OM transition delay-100 duration-300 ease-in-out transform hover:scale-125"}>
-                                    <a>Help</a>
+                                    <a className={" cursor-not-allowed "}>Help</a>
                                 </Link>
                             </li>
                             <li className={"text-lg font-medium hoverNavEny transition delay-100 duration-300 ease-in-out"}>
