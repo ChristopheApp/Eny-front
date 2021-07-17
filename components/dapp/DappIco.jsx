@@ -3,6 +3,7 @@ import Title from '../Title'
 import styles from '../../styles/Ico.module.css'
 import IcoInfo from './IcoInfo'
 import IcoInput from './IcoInput'
+import Loader from '../Loader'
 
 const DappIco = (props) => {
     const [presaleAddr, setPresaleAdrr] = useState(null)
@@ -15,7 +16,7 @@ const DappIco = (props) => {
     const [tokenContract, setTokenContract] = useState(null)
 
     useEffect(() => {
-        console.table(props.contractInfo)
+        // console.table(props.contractInfo)
         setIcoState(props.contractInfo.icoState)
         setPresaleRate(props.contractInfo.tokenPriceEth)
         setTotalSupply(props.contractInfo.tokenIcoSupply)
@@ -32,6 +33,7 @@ const DappIco = (props) => {
 
                 <div className={"w-full my-auto "} >
 
+        <Loader />
                     <h4>{"Wild Lauchpad"}</h4>
 
                     <div className={"w-full xl:p-sectionY md:p-2 rounded-xl flex lg:flex-row-reverse lg:justify-evenly lg:items-center flex-col items-center"} >
@@ -69,6 +71,7 @@ const DappIco = (props) => {
                                 title={"Presale End Time: "}
                                 param={presaleEnd}
                                 uppercase
+                                br
                             />
                             <IcoInfo
                                 title={"Token left: "}

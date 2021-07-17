@@ -20,6 +20,9 @@ export default function Home() {
       <Head>
         <title>ENY Token</title>
         <meta name="description" content="En Y Token - Official web site" />
+        <meta charset="UTF-8" />
+        <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="icon" href="/wheelie1.svg" />
       </Head>
 
@@ -27,10 +30,10 @@ export default function Home() {
       <MobileNav />
       <main className={styles.main}>
         <Hero />
-       <About/>
-       <Roadmap />
-       <News />
-       <Whitepaper />  
+        <About />
+        <Roadmap />
+        <News />
+        <Whitepaper />
       </main>
       <Footer />
     </div>

@@ -1,6 +1,9 @@
 import { useState, useCallback, useEffect } from 'react'
 import Head from 'next/head'
 import Web3 from 'web3'
+import { info, success, danger, warning } from "../components/toast"
+import { ToastContainer } from "react-toastify"
+import 'react-toastify/dist/ReactToastify.min.css'
 
 import DappNav from '../components/dapp/DappNav'
 import DappIco from '../components/dapp/DappIco'
@@ -26,7 +29,8 @@ export default function Home() {
   const [ENYtokenAddress] = useState("0x86B88770bC0122A957CABFa41775728824F2cc29")  // Adresse du ENY token sur Rinkeby
   // Pass to .ENV
   const [ICOContractAddress] = useState("0xD7B969F5e3FA2585D02f778Ab82c045cB35BB7B4")  // Adresse qui détient les ENY pour les envoyer
-
+  const [icoContract] = useState(new web3.eth.Contract(ICOContractAbi, ICOContractAddress))
+  const [enyContract] = useState(new web3.eth.Contract(Erc20Abi, ENYtokenAddress))
   // const [enyWalletSupply] = useState("0x2B6d5d6A6f588084dC9565ffA1b7f28fe60D479E") // adresse en commun qui contient la total supply
 
   const [enyPrice, setEnyPrice] = useState(0) // Le prix d'un ENY
@@ -36,21 +40,27 @@ export default function Home() {
   const [ethAmount, setEthAmount] = useState(0) // Champ de l'input Eth
 
   const [displayTotalAmountInDollars, setDisplayTotalAmountInDollars] = useState(0) // Affichage de la valeur totale en dollars
+  const [isLoading, setIsLoading] = useState(false)
+
+  const [isRinkeby, setIsRinkeby] = useState(false)
 
   const connectToWeb3 = useCallback(
     async () => {
-      if (window.ethereum) {
+      let currentChainID = await web3.eth.net.getId()
+      console.log(currentChainID)
+      if (window.ethereum && currentChainID == 4) {
+        setIsRinkeby(true)
         try {
           await window.ethereum.request({ method: 'eth_requestAccounts' })
           setIsConnectedWeb3(true)
-          //  web3.eth.net.getId()
-          //  .then(setNetworkId)
-
         } catch (err) {
-          console.error(err)
+          // console.error(err)
+          danger("Ouch something went wrong !", 8000)
         }
       } else {
-        alert("Install Metamask")
+        if (currentChainID != 4) danger("Please use Rinkebi Network !", 8000)
+        else danger("Please install Metamask !", 8000)
+        setIsRinkeby(false)
       }
     }, []
   )
@@ -103,15 +113,8 @@ export default function Home() {
 
   // Initialise le contract de l'ico
   const initIcoContract = async () => {
-    console.log("init Contract")
-
-    const icoContract = new web3.eth.Contract(
-      ICOContractAbi,
-      ICOContractAddress
-    )
-
     try {
-      console.log(icoContract)
+      // console.log(icoContract)
       const tokenContract = await icoContract.methods.tokenContract().call()
       const icoState = await icoContract.methods.icoState().call()
       const tokenIcoSupply = web3.utils.fromWei(await icoContract.methods.tokenIcoSupply().call())
@@ -119,14 +122,14 @@ export default function Home() {
       const tokenPriceEth = web3.utils.fromWei(tokenPrice)
       const tokensSold = await icoContract.methods.tokensSold().call()
       const tokenIcoTimeOut = (new Date((await icoContract.methods.tokensIcoTimeOut().call()) * 1000)).toUTCString()
-      
+
       // Set contractInfo Props for ICO Informations
       setContractInfo({ tokensSold, tokenPriceEth, tokenIcoSupply, icoState, tokenContract, tokenIcoTimeOut })
       // Set the price of 1 ENY per ETH for the currency comparator
       setEnyPrice(tokenPriceEth)
     } catch (error) {
-      console.error(error)
-      alert("You must be on the Rinkebi network.")
+      // console.error(error)
+      warning("Please use Rinkeby network! ☠️", 5000)
     }
   }
 
@@ -139,7 +142,8 @@ export default function Home() {
       // console.log(response)
     } catch (error) {
       setEthPrice(0)
-      alert("Impossible de récupérer le prix de l'eth, reviens plus tard.")
+      // alert("Impossible de récupérer le prix de l'eth, reviens plus tard.")
+      danger("Can't get the ETH price back, come back later.", 8000)
     }
   }
 
@@ -148,75 +152,64 @@ export default function Home() {
   const sendEth = async () => {
     // Sécurise le montant, pour pas envoyer plus d'ENY si on change l'input entre les 2 Transactions
     // Peut aussi se faire en désactivant les input
-    console.log(ethAmount)
+    // console.log(ethAmount)
     const tokenAmount = web3.utils.toWei(ethAmount.toString())
     const receiptAddress = accounts[0]
 
-    console.log(tokenAmount)
-    console.log(receiptAddress)
+    // console.log(tokenAmount)
+    // console.log(receiptAddress)
 
     if (ethAmount <= 0)
-      alert("Invalid amount. Must be > 0")
+      // alert("Invalid amount. Must be > 0")
+      danger("🤷‍♀️ Please enter a valid Amount!", 8000)
     else {
-      /*
-      Chargement du contrat du token ENY
-      */
-      const enyContract = new web3.eth.Contract(
-        Erc20Abi,
-        ENYtokenAddress
-      )
-
-      /*
-      Chargement du contrat de l'ico
-      */
-      const icoContract = new web3.eth.Contract(
-        ICOContractAbi,
-        ICOContractAddress
-      )
-
       /* 
       Nécessite une vérification d'être sur le bon réseau (ici Rinkebi)
       A quel moment ? je sais pas trop
       */
-      try {
-        const name = await enyContract.methods.name().call()
-        const balance = await enyContract.methods.balanceOf(accounts[0]).call()
-        const symbol = await enyContract.methods.symbol().call()
 
-        console.log(balance)
-        console.log(symbol)
-
+      if (isRinkeby) {
         // Si on est sur le bon réseau on peut faire la transaction
         try {
           icoContract.methods.buyAmountTokens().send({ from: receiptAddress, value: tokenAmount })
+            .on('sending', () => {
+              // Then => Start loader
+              setIsLoading(true)
+              // Then => clear input at the end
+              warning("Transaction send ! \n Please confirm the transaction on metamask", 3000)
+            })
             .once('transactionHash', function (hash) {
               console.log(hash)
+              info("Tx Hash is here !", 8000, hash)
             })
             .once('confirmation', function () {
-              console.log("Transaction confirmed");
-
+              success("Transaction has been confirmed !", 8000)
+              // console.log("Transaction confirmed")
+              initIcoContract()
               // Si la transaction se passe bien
             })
 
         } catch (error) {
-          alert("Error send.")
+          // alert("Error send.")
+          if (error.code === 4001) {
+            setIsLoading(false)
+            danger(" 🙅‍♀️ You reject the transaction !", 8000)
+          }
         }
-
-      } catch (error) {
-        alert("The contract network is not valid.")
+      }else{
+        warning("Please use Rinkeby network! ☠️", 5000)
       }
 
     }
   }
-
   // Changement de valeur dans l'input ENY
   const onChangeEnyInput = (value) => {
-    console.log(value)
+    // console.log(value)
     setEnyAmount(value) // Actualise le montant d'eny
     setEthAmount(value * enyPrice) // Actualise le montant d'eth 
     setDisplayTotalAmountInDollars(value * enyPrice * ethPrice) // Actualise la valeur en $
-
   }
+
 
   return (
     <div className={styles.container}>
@@ -226,7 +219,16 @@ export default function Home() {
         <link rel="icon" href="/wheelie1.svg" />
 
       </Head>
-
+      <ToastContainer position="bottom-center"
+        autoClose={8000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <main className={styles.main}>
         <DappNav
           stateConection={isConnectedWeb3}
@@ -243,6 +245,7 @@ export default function Home() {
           onChangeEnyInput={onChangeEnyInput}
           contractInfo={contractInfo}
           web3={web3}
+          isRinkeby
         />
       </main>
     </div>

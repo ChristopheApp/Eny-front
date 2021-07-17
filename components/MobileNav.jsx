@@ -14,7 +14,9 @@ const MobileNav = () => {
                 <div className="flex flex-col lg:flex-row">
                     <div className="flex justify-between items-center">
                         <Link href={"/"} passHref>
-                            <Image className={"logo-nav"} src={"/img/logo-nav.svg"} alt="ENY logo" width={250} height={98} />
+                            <a>
+                                <Image className={"logo-nav"} src={"/img/logo-nav.svg"} alt="ENY logo" width={250} height={98} />
+                            </a>
                         </Link>
                         <div>
                             <button
@@ -66,13 +68,19 @@ const MobileNav = () => {
                         </ul>
                         <div className={"flex flex-shrink-0 w-40 justify-around"}>
                             <Link target="_blank" rel="noopener noreferrer" href="https://discord.com" passHref className={"mx-2 my-2 lg:my-0 hover:text-OM transition delay-100 duration-300 ease-in-out transform hover:scale-125"}>
-                                <Discord />
+                                <a>
+                                    <Discord />
+                                </a>
                             </Link>
                             <Link target="_blank" rel="noopener noreferrer" href="https://telegram.com" passHref className={"mx-2 my-2 lg:my-0 hover:text-OM transition delay-100 duration-300 ease-in-out transform hover:scale-125"}>
-                                <Telegram />
+                                <a>
+                                    <Telegram />
+                                </a>
                             </Link>
                             <Link target="_blank" rel="noopener noreferrer" href="https://twitter.com" passHref className={"mx-2 my-2 lg:my-0 hover:text-OM transition delay-100 duration-300 ease-in-out transform hover:scale-125"}>
-                                <Twitter />
+                                <a>
+                                    <Twitter />
+                                </a>
                             </Link>
                         </div>
                         <div className="flex flex-grow-0 flex-col lg:flex-row">

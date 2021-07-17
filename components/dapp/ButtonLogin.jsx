@@ -15,7 +15,7 @@ const ButtonLogin = ({ isConnected, connectToWeb3, address }) => {
 
     return (
         <>
-            <button onClick={connectToWeb3} className={`bg-gray-300 flex justify-center items-center ${styles.enyButton}`}>
+            <button onClick={connectToWeb3} className={`bg-gray-300 flex justify-center items-center ${styles.navBtn} m-0 `}>
                 <span className={"text-sm pr-1"}>{(!isConnected ? "Connect Wallet" : (address && "Connected"))}</span>
                 <Illu
                     width={"15"}
