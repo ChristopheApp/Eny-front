@@ -91,6 +91,7 @@ export default function Home() {
     const displayChainChanged = async () => {
       // console.log("chainChanged")
       initIcoContract()
+      verifyNetwork()
     }
     const displayAccChanged = () => {
       const getAccounts = async () => setAccounts(await web3.eth.getAccounts())
