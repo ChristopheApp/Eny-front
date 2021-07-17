@@ -10,7 +10,9 @@ const Footer = () => {
             <footer className={styles.footerContainer}>
                 <div className={styles["logo-footer"]} >
                     <Link href={"/"} passHref>
-                        <Image className={"logo-nav"} src={"/img/logo-nav.svg"} alt="ENY logo" width={200} height={84} />
+                        <a>
+                            <Image className={"logo-nav"} src={"/img/logo-nav.svg"} alt="ENY logo" width={200} height={84} />
+                        </a>
                     </Link>
                 </div>
                 <div className={styles.iconsFooter} >
@@ -21,7 +23,9 @@ const Footer = () => {
                             href="https://discord.com"
                             passHref
                         >
-                            <Discord />
+                            <a>
+                                <Discord />
+                            </a>
                         </Link>
                     </li>
                     <li className={"text-bonne-mere mx-2 my-2 transition delay-150 duration-300 ease-in-out transform hover:scale-125"}>
@@ -31,7 +35,9 @@ const Footer = () => {
                             href="https://telegram.com"
                             passHref
                         >
-                            <Telegram />
+                            <a>
+                                <Telegram />
+                            </a>
                         </Link>
                     </li>
                     <li className={"text-bonne-mere mx-2 my-2 transition delay-150 duration-300 ease-in-out transform hover:scale-125"}>
@@ -41,7 +47,9 @@ const Footer = () => {
                             href="https://twitter.com"
                             passHref
                         >
-                            <Twitter />
+                            <a>
+                                <Twitter />
+                            </a>
                         </Link>
                     </li>
                 </div>

@@ -1,5 +1,4 @@
 import React from 'react'
-import styles from '../styles/InternalLink.module.css'
 
 import { Link, animateScroll as scroll } from 'react-scroll'
 

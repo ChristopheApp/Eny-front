@@ -1,23 +1,54 @@
 import React, { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import InternalLink from './InternalLink'
-import Button from '../components/Button'
-import { Discord, Telegram, Twitter } from "../components/icons"
+import ButtonLogin from "./ButtonLogin"
+// const DappNav = (props) => {
+//     return (
+//         <>
+//             <nav className="py-2 px-1 rounded-b-lg ">
+//                 <div className="flex md:flex-row flex-col justify-between items-center">
+//                     <Link href={"/"} passHref>
+//                         <a>
+//                             <Image className={"logo-nav"} src={"/img/logo-nav.svg"} alt="ENY logo" width={250} height={98} />
+//                         </a>
+//                     </Link>
+//                     {/* <p className={"truncate"}>Balance ETH: <span>{balance}</span> </p> */}
+//                     <ButtonLogin
+//                         isConnected={props.stateConection}
+//                         connectToWeb3={props.connectFunc}
+//                         address={props.address}
+//                     />
+//                 </div>
+//             </nav>
 
-const MobileNav = () => {
+//         </>
+//     );
+// }
 
+
+const DappNav = (props) => {
     const [isOpen, setIsOpen] = useState(false)
+
     return (
         <>
             <nav className="sticky top-0 blur-lg py-2 px-1 rounded-b-lg opacity-1">
                 <div className="flex flex-col lg:flex-row">
                     <div className="flex justify-between items-center">
-                        <Link href={"/"} passHref>
-                            <a>
-                                <Image className={"logo-nav"} src={"/img/logo-nav.svg"} alt="ENY logo" width={250} height={98} />
-                            </a>
-                        </Link>
+                        <div className={"md:block hidden"}>
+                            <Link href={"/"} passHref>
+                                <a>
+                                    <Image className={"logo-nav"} src={"/img/logo-nav.svg"} alt="ENY logo" width={250} height={98} />
+                                </a>
+                            </Link>
+                        </div>
+
+                        <div className={"md:block sm:hidden lg:hidden"}>
+                            <ButtonLogin
+                                isConnected={props.stateConection}
+                                connectToWeb3={props.connectFunc}
+                                address={props.address}
+                            />
+                        </div>
                         <div>
                             <button
                                 onClick={() => setIsOpen(!isOpen)}
@@ -44,6 +75,7 @@ const MobileNav = () => {
                                 </svg>
                             </button>
                         </div>
+
                     </div>
                     <div
                         className={`${isOpen ? "flex" : "hidden"
@@ -51,40 +83,37 @@ const MobileNav = () => {
                     >
                         <ul className={"flex flex-1 lg:justify-around items-center lg:flex-row flex-col "} >
                             <li className={"text-lg font-medium hoverNavEny transition delay-100 duration-300 ease-in-out"}>
-                                <InternalLink className={""} name="Home" section="hero-eny" top="1" />
+                                <Link href="/" passHref className={"mx-2 my-2 lg:my-0 hover:text-OM transition delay-100 duration-300 ease-in-out transform hover:scale-125"}>
+                                    <a>Project</a>
+                                </Link>
                             </li>
                             <li className={"text-lg font-medium hoverNavEny transition delay-100 duration-300 ease-in-out"}>
-                                <InternalLink name="About" section="about-eny" top="0" />
+                                <Link href="/dapp" passHref className={"mx-2 my-2 lg:my-0 hover:text-OM transition delay-100 duration-300 ease-in-out transform hover:scale-125"}>
+                                    <a>ICO</a>
+                                </Link>
                             </li>
                             <li className={"text-lg font-medium hoverNavEny transition delay-100 duration-300 ease-in-out"}>
-                                <InternalLink name="Roadmap" section="roadmap-key" top="0" />
+                                <Link href="/airdrop" passHref className={"mx-2 my-2 lg:my-0 hover:text-OM transition delay-100 duration-300 ease-in-out transform hover:scale-125"}>
+                                    <a>Air Drop</a>
+                                </Link>
                             </li>
                             <li className={"text-lg font-medium hoverNavEny transition delay-100 duration-300 ease-in-out"}>
-                                <InternalLink name="News" section="news-eny" top="0" />
+                                <Link href="/help" passHref className={"mx-2 my-2 lg:my-0 hover:text-OM transition delay-100 duration-300 ease-in-out transform hover:scale-125"}>
+                                    <a>Help</a>
+                                </Link>
                             </li>
                             <li className={"text-lg font-medium hoverNavEny transition delay-100 duration-300 ease-in-out"}>
-                                <Link href="/img/" target="_blank" rel="noopener noreferrer" >{"White Paper"}</Link>
+                                <Link href="/whitepaper" passHref className={"mx-2 my-2 lg:my-0 hover:text-OM transition delay-100 duration-300 ease-in-out transform hover:scale-125"}>
+                                    <a>White Paper</a>
+                                </Link>
                             </li>
                         </ul>
-                        <div className={"flex flex-shrink-0 w-40 justify-around"}>
-                            <Link target="_blank" rel="noopener noreferrer" href="https://discord.com" passHref className={"mx-2 my-2 lg:my-0 hover:text-OM transition delay-100 duration-300 ease-in-out transform hover:scale-125"}>
-                                <a>
-                                    <Discord />
-                                </a>
-                            </Link>
-                            <Link target="_blank" rel="noopener noreferrer" href="https://telegram.com" passHref className={"mx-2 my-2 lg:my-0 hover:text-OM transition delay-100 duration-300 ease-in-out transform hover:scale-125"}>
-                                <a>
-                                    <Telegram />
-                                </a>
-                            </Link>
-                            <Link target="_blank" rel="noopener noreferrer" href="https://twitter.com" passHref className={"mx-2 my-2 lg:my-0 hover:text-OM transition delay-100 duration-300 ease-in-out transform hover:scale-125"}>
-                                <a>
-                                    <Twitter />
-                                </a>
-                            </Link>
-                        </div>
-                        <div className="flex flex-grow-0 flex-col lg:flex-row">
-                            <Button name="Get started" to={"/dapp"} margin={1} />
+                        <div className="flex flex-grow-0 flex-col lg:flex-row md:block hidden">
+                            <ButtonLogin
+                                isConnected={props.stateConection}
+                                connectToWeb3={props.connectFunc}
+                                address={props.address}
+                            />
                         </div>
                     </div>
                 </div>
@@ -95,7 +124,7 @@ const MobileNav = () => {
                     background-color:rgba(255, 255, 255, 0.7);
                     backdrop-filter: blur(10px);
                     -webkit-backdrop-filter: blur(10px);
-                    z-index: 3000;
+                    z-index: 120;
                 }
                 .hoverNavEny{
                     border-bottom: 1px solid transparent;
@@ -106,8 +135,10 @@ const MobileNav = () => {
                 
                 `}
             </style>
+
+
         </>
-    );
+    )
 }
 
-export default MobileNav
+export default DappNav
