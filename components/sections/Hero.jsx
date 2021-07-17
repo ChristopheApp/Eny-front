@@ -11,8 +11,8 @@ const Hero = () => {
             <section className={styles.heroEny} id="hero-eny">
                 <div className={styles.heroContainer} >
                     <div className={`${styles.coLr}`} >
-                        <h1>En Y, le token qui cabre sur le marché ! </h1>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum volutpat bibendum dolor ut consequat. Nam commodo tortor id tortor tincidunt maximus. </p>
+                        <h1 className={"uppercase"}>EnY, the token that raises on the market !</h1>
+                        <p>A crypto-currency created around a certain open-source philosophy, inspired by a French RAP icon. Start in "stunt" 🛵💨 to arrive in "T-max" 🏍️💨 In "Y" like your grandfather!</p>
                         <div className={styles.heroBtnContainer}>
                             <Button name="Get started" to={"/dapp"} margin={1} />
                             <Button name="White Paper" to={"/whitepaper"} margin={1} />
@@ -28,7 +28,7 @@ const Hero = () => {
                         />
                     </div>
                 </div>
-                <div className={styles.counterContainer} >
+                {/* <div className={styles.counterContainer} >
                     <div className={styles.counter} >
                         <span className={styles.counterNumber} >$0.30</span>
                         <p className={styles.counterTitle} >Current Price</p>
@@ -45,7 +45,7 @@ const Hero = () => {
                         <span className={styles.counterNumber} >$10729.80</span>
                         <p className={styles.counterTitle} >Market Cap</p>
                     </div>
-                </div>
+                </div> */}
             </section>
         </>
     );

@@ -10,7 +10,7 @@ const Footer = () => {
             <footer className={styles.footerContainer}>
                 <div className={styles["logo-footer"]} >
                     <Link href={"/"} passHref>
-                        <a>
+                        <a href={"/"}>
                             <Image className={"logo-nav"} src={"/img/logo-nav.svg"} alt="ENY logo" width={200} height={84} />
                         </a>
                     </Link>

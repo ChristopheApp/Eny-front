@@ -1,0 +1,17 @@
+/* 
+* Hero
+*/
+
+.heroEny {
+    width: 100%;
+    min-height: 640px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    border-radius: 15px;
+    background-image: url(/img/blue-wave-1.svg);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
