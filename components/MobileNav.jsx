@@ -63,22 +63,22 @@ const MobileNav = () => {
                                 <InternalLink name="News" section="news-eny" top="0" />
                             </li>
                             <li className={"text-lg font-medium hoverNavEny transition delay-100 duration-300 ease-in-out"}>
-                                <Link href="/img/" target="_blank" rel="noopener noreferrer" >{"White Paper"}</Link>
+                                <Link href="/whitepaper" target="_blank" rel="noopener noreferrer" >{"White Paper"}</Link>
                             </li>
                         </ul>
                         <div className={"flex flex-shrink-0 w-40 justify-around"}>
-                            <Link target="_blank" rel="noopener noreferrer" href="https://discord.com" passHref className={"mx-2 my-2 lg:my-0 hover:text-OM transition delay-100 duration-300 ease-in-out transform hover:scale-125"}>
-                                <a>
+                            <Link target="_blank" rel="noopener noreferrer" href="https://discord.com" passHref>
+                                <a className={"mx-2 my-2 lg:my-0 hover:text-bonne-mere transition delay-100 duration-300 ease-in-out transform hover:scale-125"}>
                                     <Discord />
                                 </a>
                             </Link>
-                            <Link target="_blank" rel="noopener noreferrer" href="https://telegram.com" passHref className={"mx-2 my-2 lg:my-0 hover:text-OM transition delay-100 duration-300 ease-in-out transform hover:scale-125"}>
-                                <a>
+                            <Link target="_blank" rel="noopener noreferrer" href="https://telegram.com" passHref>
+                                <a className={"mx-2 my-2 lg:my-0 hover:text-bonne-mere transition delay-100 duration-300 ease-in-out transform hover:scale-125"}>
                                     <Telegram />
                                 </a>
                             </Link>
-                            <Link target="_blank" rel="noopener noreferrer" href="https://twitter.com" passHref className={"mx-2 my-2 lg:my-0 hover:text-OM transition delay-100 duration-300 ease-in-out transform hover:scale-125"}>
-                                <a>
+                            <Link target="_blank" rel="noopener noreferrer" href="https://twitter.com" passHref>
+                                <a className={"mx-2 my-2 lg:my-0 hover:text-bonne-mere transition delay-100 duration-300 ease-in-out transform hover:scale-125"}>
                                     <Twitter />
                                 </a>
                             </Link>

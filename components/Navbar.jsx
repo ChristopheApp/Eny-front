@@ -53,17 +53,23 @@ const Navbar = ({ }) => {
                     <li><Link href="/whitepaper" target="_blank" rel="noopener noreferrer" >{"White Paper"}</Link></li>
                     <li>
                         <Link target="_blank" rel="noopener noreferrer" href="https://discord.com" passHref>
-                            <Image src="/img/discord.svg" alt="Icon discord" width={30} height={30} />
+                            <Image src="/img/discord.svg" alt="Icon discord" width={30} height={30}
+                            className={"transition delay-150 duration-300 ease-in-out transform hover:scale-125"}
+                            />
                         </Link>
                     </li>
                     <li>
                         <Link target="_blank" rel="noopener noreferrer" href="https://telegram.com" passHref>
-                            <Image src="/img/telegram.svg" alt="Icon telegram" width={30} height={30} />
+                            <Image src="/img/telegram.svg" alt="Icon telegram" width={30} height={30}
+                            className={"transition delay-150 duration-300 ease-in-out transform hover:scale-125"}
+                            />
                         </Link>
                     </li>
                     <li>
                         <Link target="_blank" rel="noopener noreferrer" href="https://twitter.com" passHref>
-                            <Image src="/img/twitter.svg" alt="Icon twitter" width={30} height={30} />
+                            <Image src="/img/twitter.svg" alt="Icon twitter" width={30} height={30}
+                            className={"transition delay-150 duration-300 ease-in-out transform hover:scale-125"}
+                            />
                         </Link>
                     </li>
                 </ul>
