@@ -87,6 +87,7 @@ const DappIco = (props) => {
                             sendEth={props.sendEth}
                             isRinkeby={props.isRinkeby}
                             hash={props.hash}
+                            isLoading={props.isLoading}
                         />
                     </div>
                 </div>

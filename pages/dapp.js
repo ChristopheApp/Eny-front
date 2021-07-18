@@ -212,6 +212,7 @@ export default function Home() {
               // Si la transaction se passe bien
               // SET Transaction OK pour reload la balance
               setIsTransaction(true)
+              setIsLoading(false)
             })
           // SET Transaction END 
           setIsTransaction(false)
@@ -275,6 +276,7 @@ export default function Home() {
           web3={web3}
           isRinkeby={isRinkeby}
           hash={hash}
+          isLoading={isLoading}
 
         />
       </main>
