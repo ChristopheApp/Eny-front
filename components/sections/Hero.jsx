@@ -15,7 +15,7 @@ const Hero = () => {
                         <p>{"A crypto-currency created around a certain open-source philosophy, inspired by a French RAP icon. Start in \"stunt\" 🛵💨 to arrive in \"T-max\" 🏍️💨 In \"Y\" like your grandfather!"}</p>
                         <div className={styles.heroBtnContainer}>
                             <Button name="Get started" to={"/dapp"} margin={1} />
-                            <Button name="White Paper" to={"/whitepaper"} margin={1} />
+                            <Button name="White Paper" to={"https://rocky-promotion-f0b.notion.site/ENY-Token-Whitepaper-77ec25531e2e46e59ea6ed08a4124662"} margin={1} />
                         </div>
                     </div>
                     <div className={styles.coLl} >

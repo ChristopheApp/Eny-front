@@ -63,7 +63,11 @@ const MobileNav = () => {
                                 <InternalLink name="News" section="news-eny" top="0" />
                             </li>
                             <li className={"text-lg font-medium hoverNavEny transition delay-100 duration-300 ease-in-out"}>
-                                <Link href="/whitepaper" target="_blank" rel="noopener noreferrer" >{"White Paper"}</Link>
+                                <Link href="https://rocky-promotion-f0b.notion.site/ENY-Token-Whitepaper-77ec25531e2e46e59ea6ed08a4124662" passHref >
+                                    <a target="_blank" rel="noopener noreferrer">
+                                        {"White Paper"}
+                                    </a>
+                                </Link>
                             </li>
                         </ul>
                         <div className={"flex flex-shrink-0 w-40 justify-around"}>
