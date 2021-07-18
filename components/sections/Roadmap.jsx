@@ -69,7 +69,7 @@ const Roadmap = () => {
                                 key={q.id}
                                 id={q.id}
                                 onClick={getId}
-                                className={"w-20 h-5 bg-bonne-mere mx-4 my-2 p-2 rounded-md hover:bg-OM hover:shadow-md transition delay-100 duration-300 ease-in-out "}
+                                className={`w-20 h-5 bg-bonne-mere mx-4 my-2 p-2 rounded-md hover:bg-OM hover:shadow-md transition delay-100 duration-300 ease-in-out ${q.id == idQ && " bg-le-sang"}`}
                             >
                                 {q.title}
                             </button>
