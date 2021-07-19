@@ -27,9 +27,9 @@ export default function Home() {
   const [contractInfo, setContractInfo] = useState({});
 
   // Pass to .ENV
-  const [ENYtokenAddress] = useState("0x86B88770bC0122A957CABFa41775728824F2cc29")  // Adresse du ENY token sur Rinkeby
+  const [ENYtokenAddress] = useState("0x0F21e7A45E3B0d4B579730fD87573749Ca280FdD")  // Adresse du ENY token sur Rinkeby
   // Pass to .ENV
-  const [ICOContractAddress] = useState("0xD7B969F5e3FA2585D02f778Ab82c045cB35BB7B4")  // Adresse qui détient les ENY pour les envoyer
+  const [ICOContractAddress] = useState("0xa222E2361b49A0a118EDbA696c7f0961CAb4A2C9")  // Adresse qui détient les ENY pour les envoyer
   const [icoContract] = useState(new web3.eth.Contract(ICOContractAbi, ICOContractAddress))
   const [enyContract] = useState(new web3.eth.Contract(Erc20Abi, ENYtokenAddress))
   // const [enyWalletSupply] = useState("0x2B6d5d6A6f588084dC9565ffA1b7f28fe60D479E") // adresse en commun qui contient la total supply
@@ -277,6 +277,7 @@ export default function Home() {
           isRinkeby={isRinkeby}
           hash={hash}
           isLoading={isLoading}
+          ICOContractAddress={ICOContractAddress}
 
         />
       </main>
