@@ -39,7 +39,7 @@ const DappIco = (props) => {
                             <IcoInfo
                                 title={"Presale Address: "}
                                 // TO Process .ENV
-                                param={"0x6752A24c636AEdC688de1e38212c392547A3b90c"}
+                                param={props.ICOContractAddress}
                                 uppercase
                                 br
                             />
